@@ -105,6 +105,57 @@
   .nav-cta:hover { background: var(--teal-dark); transform: translateY(-2px); }
   .nav-cta::after { display: none !important; }
 
+  /* ── Hamburger Menu ── */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1001;
+    background: none; border: none;
+    padding: 5px;
+  }
+  .menu-toggle span {
+    width: 26px; height: 2.5px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .navbar.scrolled .menu-toggle span { background: var(--dark); }
+  .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .menu-toggle.active span:nth-child(2) { opacity: 0; }
+  .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(13, 122, 110, 0.97);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+  }
+  .mobile-menu.active { opacity: 1; visibility: visible; }
+  .mobile-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+  }
+  .mobile-menu a:hover { color: var(--gold-light); }
+  .mobile-menu .nav-cta {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    padding: 0.8rem 2.5rem;
+  }
+
   /* ── Hero Section ── */
   .hero {
     min-height: 100vh;
@@ -653,10 +704,12 @@
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
     .testimonials-track { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .menu-toggle { display: flex; }
+    .mobile-menu { display: flex; }
   }
   @media (max-width: 640px) {
     .navbar { padding: 0.8rem 1.2rem; }
-    .nav-links { display: none; }
     section { padding: 4rem 1.2rem; }
     .hero-title { font-size: 2rem; }
     .services-grid { grid-template-columns: 1fr; }
@@ -695,7 +748,19 @@
     <li><a href="#testimonials">آراء العملاء</a></li>
     <li><a href="#contact" class="nav-cta">احجز موعدك</a></li>
   </ul>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" class="mobile-link">خدماتنا</a>
+  <a href="#about" class="mobile-link">من نحن</a>
+  <a href="#gallery" class="mobile-link">معرض الصور</a>
+  <a href="#testimonials" class="mobile-link">آراء العملاء</a>
+  <a href="#contact" class="nav-cta mobile-link">احجز موعدك</a>
+</div>
 
 <!-- Hero Section -->
 <section class="hero">
@@ -993,7 +1058,7 @@
       <ul>
         <li><a href="#">📍 الفريديس - المدخل الرئيسي</a></li>
         <li><a href="#">📞 077-450-2044</a></li>
-        <li><a href="#">✉️ info@nuviacenter.com</a></li>
+        <li><a href="#">✉️ <span class="__cf_email__" data-cfemail="40292e262f002e3536292123252e3425326e232f2d">[email&#160;protected]</span></a></li>
         <li><a href="#">⏰ السبت - الخميس: 9:00 - 20:00</a></li>
       </ul>
     </div>
@@ -1007,7 +1072,7 @@
 <!-- WhatsApp Float Button -->
 <a href="#" class="whatsapp-float" title="تواصل عبر واتساب">💬</a>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Preloader
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -1021,19 +1086,26 @@
     navbar.classList.toggle('scrolled', window.scrollY > 60);
   });
 
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
         setTimeout(() => {
           entry.target.classList.add('visible');
-        }, index * 100);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+        }, 
