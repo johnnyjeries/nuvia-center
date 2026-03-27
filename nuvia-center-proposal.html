@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuvia Center | Aesthetic Medical Lounge</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a9e8f;
+    --teal-dark: #0d7a6e;
+    --teal-light: #b2e4de;
+    --teal-pale: #e8f7f4;
+    --gold: #c9a84c;
+    --gold-light: #f0e6c8;
+    --cream: #faf8f3;
+    --white: #ffffff;
+    --dark: #1a2a2a;
+    --text: #2d3e3e;
+    --text-light: #5a7a7a;
+    --shadow-soft: 0 4px 30px rgba(26, 158, 143, 0.08);
+    --shadow-card: 0 8px 40px rgba(26, 158, 143, 0.1);
+    --shadow-hover: 0 12px 50px rgba(26, 158, 143, 0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  /* ── Preloader ── */
+  .preloader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  .preloader.hidden { opacity: 0; visibility: hidden; }
+  .preloader-logo {
+    color: white; font-size: 2.5rem; font-weight: 800;
+    animation: pulse-in 1.2s ease infinite alternate;
+  }
+  .preloader-logo span { font-family: 'Cormorant Garamond', serif; font-weight: 300; }
+  @keyframes pulse-in { from { opacity: 0.5; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+  /* ── Navigation ── */
+  .navbar {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 1000;
+    padding: 1rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: all 0.4s ease;
+    background: transparent;
+  }
+  .navbar.scrolled {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    padding: 0.7rem 3rem;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    text-decoration: none; color: white;
+    transition: color 0.3s;
+  }
+  .navbar.scrolled .nav-logo { color: var(--teal-dark); }
+  .nav-logo-icon {
+    width: 45px; height: 45px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 1.2rem;
+  }
+  .nav-logo-text { font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; }
+  .nav-logo-sub { font-size: 0.6rem; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; }
+
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: rgba(255,255,255,0.9);
+    font-weight: 500; font-size: 0.95rem;
+    position: relative; transition: color 0.3s;
+  }
+  .navbar.scrolled .nav-links a { color: var(--text); }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; right: 0;
+    width: 0; height: 2px; background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    padding: 0.6rem 1.8rem;
+    background: var(--gold);
+    color: white !important;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s !important;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--teal-dark); transform: translateY(-2px); }
+  .nav-cta::after { display: none !important; }
+
+  /* ── Hero Section ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 40%, #2ab8a6 100%);
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.1) 0%, transparent 40%);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(255,255,255,1) 30px, rgba(255,255,255,1) 31px),
+      repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(255,255,255,1) 30px, rgba(255,255,255,1) 31px);
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    width: 100%; max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 4rem;
+  }
+  .hero-text { color: white; }
+  .hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 30px;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+  .hero-title {
+    font-size: 3.2rem;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+  .hero-title em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold-light);
+  }
+  .hero-subtitle {
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.9;
+    opacity: 0.9;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1s ease 0.7s both;
+  }
+  .hero-buttons {
+    display: flex; gap: 1rem;
+    animation: fadeUp 1s ease 0.9s both;
+  }
+  .btn-primary {
+    padding: 1rem 2.5rem;
+    background: var(--gold);
+    color: white;
+    border: none; border-radius: 50px;
+    font-family: 'Tajawal'; font-size: 1rem; font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .btn-primary:hover { background: #d4b35a; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(201,168,76,0.4); }
+  .btn-secondary {
+    padding: 1rem 2.5rem;
+    background: transparent;
+    color: white;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    border-radius: 50px;
+    font-family: 'Tajawal'; font-size: 1rem; font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+  .hero-visual {
+    position: relative;
+    animation: fadeUp 1.2s ease 0.6s both;
+  }
+  .hero-image-wrapper {
+    position: relative;
+    width: 420px; height: 500px;
+    margin: 0 auto;
+  }
+  .hero-image-frame {
+    width: 100%; height: 100%;
+    border-radius: 200px 200px 40px 40px;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.15);
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-image-placeholder {
+    width: 90%; height: 90%;
+    border-radius: 180px 180px 30px 30px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 1rem;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+  }
+  .hero-image-placeholder svg { width: 60px; height: 60px; opacity: 0.4; }
+  .hero-float-card {
+    position: absolute;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1rem 1.3rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    display: flex; align-items: center; gap: 0.8rem;
+    animation: float 3s ease-in-out infinite alternate;
+  }
+  .hero-float-card:nth-child(2) { top: 15%; left: -40px; animation-delay: 0.5s; }
+  .hero-float-card:nth-child(3) { bottom: 20%; right: -50px; animation-delay: 1s; }
+  .float-icon {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .float-icon.teal { background: var(--teal-pale); color: var(--teal); }
+  .float-icon.gold { background: var(--gold-light); color: var(--gold); }
+  .float-text { font-size: 0.75rem; color: var(--text-light); }
+  .float-text strong { display: block; font-size: 0.9rem; color: var(--dark); }
+
+  @keyframes float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-12px); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Decorative flowers ── */
+  .flower-deco {
+    position: absolute;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+  .flower-deco.top-left { top: 5%; left: 3%; width: 140px; transform: rotate(-15deg); }
+  .flower-deco.bottom-right { bottom: 8%; right: 5%; width: 120px; transform: rotate(20deg); }
+
+  /* ── Section Styles ── */
+  section { padding: 6rem 3rem; }
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .section-label {
+    display: inline-block;
+    color: var(--teal);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 0.8rem;
+    position: relative;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; position: absolute; top: 50%;
+    width: 30px; height: 1px; background: var(--teal-light);
+  }
+  .section-label::before { right: calc(100% + 12px); }
+  .section-label::after { left: calc(100% + 12px); }
+  .section-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 0.8rem;
+  }
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-weight: 300;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ── Services Grid ── */
+  .services { background: white; }
+  .services-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .service-card {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; right: 0; left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+    background: white;
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon {
+    width: 70px; height: 70px;
+    margin: 0 auto 1.5rem;
+    border-radius: 20px;
+    background: var(--teal-pale);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+  }
+  .service-icon svg { width: 32px; height: 32px; color: var(--teal); }
+  .service-card:hover .service-icon {
+    background: var(--teal);
+    transform: scale(1.05);
+  }
+  .service-card:hover .service-icon svg { color: white; }
+  .service-card h3 {
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--dark); margin-bottom: 0.6rem;
+  }
+  .service-card p {
+    font-size: 0.9rem; color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* ── About / Why Us ── */
+  .about {
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .about::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(201,168,76,0.1) 0%, transparent 50%);
+  }
+  .about-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .about-text h2 {
+    font-size: 2.4rem; font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+  .about-text h2 em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 300;
+    color: var(--gold-light);
+  }
+  .about-text p {
+    font-weight: 300; line-height: 2;
+    opacity: 0.9; margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+  .about-features {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .about-feature {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s;
+  }
+  .about-feature:hover {
+    background: rgba(255,255,255,0.14);
+    transform: translateY(-4px);
+  }
+  .about-feature-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .about-feature h4 {
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .about-feature p {
+    font-size: 0.8rem; opacity: 0.7;
+    margin: 0; line-height: 1.5;
+  }
+
+  .about-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+  }
+  .stat-card:hover {
+    background: rgba(255,255,255,0.16);
+    transform: translateY(-5px);
+  }
+  .stat-number {
+    font-size: 3rem; font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-size: 0.9rem; font-weight: 400;
+    opacity: 0.8;
+  }
+
+  /* ── Gallery / Before-After ── */
+  .gallery { background: var(--cream); }
+  .gallery-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .gallery-item {
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, var(--teal-pale), #d4ede9);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+  .gallery-item:hover { transform: scale(1.03); box-shadow: var(--shadow-hover); }
+  .gallery-item:nth-child(2) { aspect-ratio: 4/5; grid-row: span 1; }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(26,42,42,0.7));
+    display: flex; align-items: flex-end;
+    padding: 1.5rem;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay span {
+    color: white; font-weight: 600; font-size: 1rem;
+  }
+  .gallery-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.5rem;
+    color: var(--teal); opacity: 0.5;
+    font-size: 0.85rem;
+  }
+  .gallery-placeholder svg { width: 40px; height: 40px; }
+
+  /* ── Testimonials ── */
+  .testimonials { background: white; }
+  .testimonials-track {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .testimonial-card {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card);
+  }
+  .testimonial-quote {
+    font-size: 3rem;
+    color: var(--teal-light);
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .testimonial-text {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .testimonial-author {
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .testimonial-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--teal-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: var(--teal);
+  }
+  .testimonial-name { font-weight: 700; font-size: 0.9rem; color: var(--dark); }
+  .testimonial-role { font-size: 0.78rem; color: var(--text-light); }
+  .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 1rem; }
+
+  /* ── CTA Section ── */
+  .cta {
+    background: var(--cream);
+    padding: 5rem 3rem;
+  }
+  .cta-inner {
+    max-width: 900px; margin: 0 auto;
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+    border-radius: 32px;
+    padding: 4rem;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-inner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 80%, rgba(201,168,76,0.15), transparent 50%);
+  }
+  .cta-inner h2 {
+    font-size: 2.2rem; font-weight: 800;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .cta-inner p {
+    font-weight: 300; opacity: 0.9;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    position: relative;
+  }
+  .cta-phone {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    font-size: 1.8rem; font-weight: 800;
+    color: var(--gold-light);
+    direction: ltr;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .cta-buttons { position: relative; display: flex; gap: 1rem; justify-content: center; }
+
+  /* ── Footer ── */
+  .footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.7);
+    padding: 4rem 3rem 2rem;
+  }
+  .footer-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand h3 {
+    color: white; font-size: 1.4rem; font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .footer-brand p {
+    font-size: 0.85rem; line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .footer-social {
+    display: flex; gap: 0.8rem;
+  }
+  .footer-social a {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+  .footer-social a:hover { background: var(--teal); color: white; }
+  .footer-col h4 {
+    color: white; font-size: 1rem; font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.6rem; }
+  .footer-col a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--teal-light); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem;
+  }
+
+  /* ── Scroll Animations ── */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── WhatsApp Float Button ── */
+  .whatsapp-float {
+    position: fixed; bottom: 2rem; left: 2rem;
+    width: 60px; height: 60px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1.8rem;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    z-index: 999;
+    text-decoration: none;
+    transition: all 0.3s;
+    animation: float 2s ease-in-out infinite alternate;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-content { grid-template-columns: 1fr; text-align: center; }
+    .hero-visual { display: none; }
+    .hero-title { font-size: 2.5rem; }
+    .hero-buttons { justify-content: center; }
+    .about-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonials-track { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .navbar { padding: 0.8rem 1.2rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.2rem; }
+    .hero-title { font-size: 2rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .about-features { grid-template-columns: 1fr; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .cta-inner { padding: 2.5rem 1.5rem; }
+    .cta-phone { font-size: 1.4rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader-logo">
+    <span>N</span>UVIA CENTER
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">N</div>
+    <div>
+      <div class="nav-logo-text">NUVIA CENTER</div>
+      <div class="nav-logo-sub">Aesthetic Medical Lounge</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">خدماتنا</a></li>
+    <li><a href="#about">من نحن</a></li>
+    <li><a href="#gallery">معرض الصور</a></li>
+    <li><a href="#testimonials">آراء العملاء</a></li>
+    <li><a href="#contact" class="nav-cta">احجز موعدك</a></li>
+  </ul>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <svg class="flower-deco top-left" viewBox="0 0 200 200" fill="white">
+    <ellipse cx="100" cy="60" rx="30" ry="55" transform="rotate(0 100 100)"/>
+    <ellipse cx="100" cy="60" rx="30" ry="55" transform="rotate(72 100 100)"/>
+    <ellipse cx="100" cy="60" rx="30" ry="55" transform="rotate(144 100 100)"/>
+    <ellipse cx="100" cy="60" rx="30" ry="55" transform="rotate(216 100 100)"/>
+    <ellipse cx="100" cy="60" rx="30" ry="55" transform="rotate(288 100 100)"/>
+    <circle cx="100" cy="100" r="15"/>
+  </svg>
+  <svg class="flower-deco bottom-right" viewBox="0 0 200 200" fill="white">
+    <ellipse cx="100" cy="60" rx="25" ry="50" transform="rotate(0 100 100)"/>
+    <ellipse cx="100" cy="60" rx="25" ry="50" transform="rotate(60 100 100)"/>
+    <ellipse cx="100" cy="60" rx="25" ry="50" transform="rotate(120 100 100)"/>
+    <ellipse cx="100" cy="60" rx="25" ry="50" transform="rotate(180 100 100)"/>
+    <ellipse cx="100" cy="60" rx="25" ry="50" transform="rotate(240 100 100)"/>
+    <ellipse cx="100" cy="60" rx="25" ry="50" transform="rotate(300 100 100)"/>
+    <circle cx="100" cy="100" r="12"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">✨ مركز طبي تجميلي متكامل</div>
+      <h1 class="hero-title">
+        لأن صحتك وجمالك
+        <br>يستاهلوا <em>الأفضل</em>
+      </h1>
+      <p class="hero-subtitle">
+        أكتر من مركز تجميل... تجربة طبية متكاملة تهتم بصحتك وجمالك.
+        <br>علاجات متقدمة بأيدي أفضل المتخصصين في الفريديس.
+      </p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn-primary">احجز موعدك الآن</a>
+        <a href="#services" class="btn-secondary">تعرف على خدماتنا</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-image-wrapper">
+        <div class="hero-image-frame">
+          <div class="hero-image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 0115 0"/>
+            </svg>
+            صورة احترافية
+          </div>
+        </div>
+        <div class="hero-float-card">
+          <div class="float-icon teal">✓</div>
+          <div class="float-text">
+            <strong>أطباء متخصصين</strong>
+            خبرة +10 سنوات
+          </div>
+        </div>
+        <div class="hero-float-card">
+          <div class="float-icon gold">★</div>
+          <div class="float-text">
+            <strong>+2000 عميل</strong>
+            نتائج مضمونة
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="services" id="services">
+  <div class="section-header reveal">
+    <div class="section-label">خدماتنا</div>
+    <h2 class="section-title">حلول طبية وتجميلية شاملة</h2>
+    <p class="section-subtitle">نقدم مجموعة متكاملة من الخدمات الطبية والتجميلية بأحدث التقنيات</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+          <path d="M18.25 7.5l.625 2.188a2.25 2.25 0 001.537 1.537L22.6 11.85l-2.188.625a2.25 2.25 0 00-1.537 1.537L18.25 16.2"/>
+        </svg>
+      </div>
+      <h3>علاجات وتجميل طبي</h3>
+      <p>حقن بوتوكس وفيلر، تقشير كيميائي، وعلاجات تجميلية متقدمة بأيدي متخصصين</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+        </svg>
+      </div>
+      <h3>رعاية طبية فورية</h3>
+      <p>خدمات طبية طارئة ورعاية فورية مع فريق طبي متأهب على مدار الساعة</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+        </svg>
+      </div>
+      <h3>حلول تجميل متقدمة</h3>
+      <p>ليزر لإزالة الشعر، شد البشرة، وعلاجات التصبغات بأحدث الأجهزة العالمية</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M11.42 15.17l-5.1-3.39M15.17 11.42l3.39-5.1M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 4.5a5.25 5.25 0 110 10.5 5.25 5.25 0 010-10.5z"/>
+        </svg>
+      </div>
+      <h3>خدمات علاجية شاملة</h3>
+      <p>علاج فيتامينات عن طريق الوريد، علاجات تغذية، واستشارات طبية متكاملة</p>
+    </div>
+  </div>
+</section>
+
+<!-- About / Why Us Section -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <h2>أكتر من مركز تجميل...<br><em>تجربة طبية متكاملة</em></h2>
+      <p>
+        في Nuvia Center، نؤمن أن الجمال يبدأ من الصحة. لذلك نقدم تجربة فريدة تجمع بين العلاجات الطبية المتقدمة والخدمات التجميلية الراقية، بأيدي فريق من أفضل الأطباء والمتخصصين.
+      </p>
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="about-feature-icon">🏥</div>
+          <h4>أجهزة حديثة</h4>
+          <p>أحدث التقنيات العالمية</p>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">👨‍⚕️</div>
+          <h4>فريق متخصص</h4>
+          <p>أطباء ذوو خبرة واسعة</p>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">💎</div>
+          <h4>نتائج مضمونة</h4>
+          <p>رضا العملاء أولويتنا</p>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🌿</div>
+          <h4>بيئة مريحة</h4>
+          <p>أجواء هادئة واستقبال راقي</p>
+        </div>
+      </div>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card">
+        <div class="stat-number">+2000</div>
+        <div class="stat-label">عميل سعيد</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+10</div>
+        <div class="stat-label">سنوات خبرة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+15</div>
+        <div class="stat-label">خدمة متخصصة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">نسبة رضا العملاء</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery" id="gallery">
+  <div class="section-header reveal">
+    <div class="section-label">معرض الصور</div>
+    <h2 class="section-title">نتائج تتحدث عن نفسها</h2>
+    <p class="section-subtitle">شاهدوا نتائج عملائنا الحقيقية والتحولات المذهلة</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="8.5" cy="8.5" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+        قبل وبعد
+      </div>
+      <div class="gallery-overlay"><span>علاج البشرة</span></div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="8.5" cy="8.5" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+        قبل وبعد
+      </div>
+      <div class="gallery-overlay"><span>حقن فيلر</span></div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="8.5" cy="8.5" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+        قبل وبعد
+      </div>
+      <div class="gallery-overlay"><span>ليزر متقدم</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials" id="testimonials">
+  <div class="section-header reveal">
+    <div class="section-label">آراء العملاء</div>
+    <h2 class="section-title">ماذا يقول عملاؤنا</h2>
+    <p class="section-subtitle">تجارب حقيقية من عملاء راضين عن خدماتنا</p>
+  </div>
+  <div class="testimonials-track">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">تجربة رائعة من أول زيارة. الطاقم محترف والنتائج فاقت توقعاتي. أنصح الجميع بزيارة Nuvia Center.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">س</div>
+        <div>
+          <div class="testimonial-name">سارة م.</div>
+          <div class="testimonial-role">علاج بشرة</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">أفضل مركز في المنطقة. الأجهزة حديثة والأطباء متعاونين. شكراً لكم على الاهتمام والنتائج المميزة.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">ل</div>
+        <div>
+          <div class="testimonial-name">ليلى ع.</div>
+          <div class="testimonial-role">ليزر</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">من زمان بدور على مركز موثوق. في Nuvia Center حسيت بالراحة والأمان من أول لحظة. النتائج ممتازة!</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">ر</div>
+        <div>
+          <div class="testimonial-name">رنا ك.</div>
+          <div class="testimonial-role">حقن بوتوكس</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta" id="contact">
+  <div class="cta-inner reveal">
+    <h2>جاهزة تبدأي رحلتك نحو الجمال؟</h2>
+    <p>احجزي موعدك اليوم واحصلي على استشارة مجانية مع أطبائنا المتخصصين</p>
+    <div class="cta-phone">📞 077-450-2044</div>
+    <div class="cta-buttons">
+      <a href="#" class="btn-primary" style="font-size:1.1rem;">احجز عبر واتساب</a>
+      <a href="#" class="btn-secondary">اتصل بنا</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>NUVIA CENTER</h3>
+      <p>Aesthetic Medical Lounge<br>أكتر من مركز تجميل... تجربة طبية متكاملة تهتم بصحتك وجمالك</p>
+      <div class="footer-social">
+        <a href="#">IG</a>
+        <a href="#">FB</a>
+        <a href="#">TT</a>
+        <a href="#">WA</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>خدماتنا</h4>
+      <ul>
+        <li><a href="#">علاجات تجميلية</a></li>
+        <li><a href="#">حقن بوتوكس وفيلر</a></li>
+        <li><a href="#">ليزر</a></li>
+        <li><a href="#">رعاية طبية</a></li>
+        <li><a href="#">علاج فيتامينات</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>روابط سريعة</h4>
+      <ul>
+        <li><a href="#">الرئيسية</a></li>
+        <li><a href="#">من نحن</a></li>
+        <li><a href="#">معرض الصور</a></li>
+        <li><a href="#">آراء العملاء</a></li>
+        <li><a href="#">اتصل بنا</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل معنا</h4>
+      <ul>
+        <li><a href="#">📍 الفريديس - المدخل الرئيسي</a></li>
+        <li><a href="#">📞 077-450-2044</a></li>
+        <li><a href="#">✉️ info@nuviacenter.com</a></li>
+        <li><a href="#">⏰ السبت - الخميس: 9:00 - 20:00</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Nuvia Center. جميع الحقوق محفوظة.</span>
+    <span>تصميم وتطوير بواسطة <strong style="color:var(--teal-light);">Joni Desarrollo Web</strong></span>
+  </div>
+</footer>
+
+<!-- WhatsApp Float Button -->
+<a href="#" class="whatsapp-float" title="تواصل عبر واتساب">💬</a>
+
+<script>
+  // Preloader
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('preloader').classList.add('hidden');
+    }, 1200);
+  });
+
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
